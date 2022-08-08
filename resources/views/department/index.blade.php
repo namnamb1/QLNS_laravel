@@ -2,14 +2,16 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Projects</h3>
+        <h3 class="card-title">Danh sách phòng ban</h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                <i class="fas fa-times"></i>
-            </button>
+            <form class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm phòng ban" value="{{ $keyword }}">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="card-body p-0" style="display: block;">

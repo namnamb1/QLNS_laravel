@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = Department::orderBy('id', 'desc')->paginate(10);
-        return view('department.index', compact('list'));
+        $list = new Department();
+        $keyword = $request->keyword;
+        if ($keyword) {
+            $list = $list->where('department_name', 'like', "%" . $keyword . "%");
+        }
+        $list = $list->orderBy('id', 'desc')->paginate(10);
+
+        return view('department.index', compact('list','keyword'));
     }
 
     public function create()
