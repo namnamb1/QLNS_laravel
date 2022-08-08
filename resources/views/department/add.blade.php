@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tên phòng ban </label>
-                        <input type="text" name="department_name" class="form-control">
+                        <input type="text" name="department_name" class="form-control" value="{{ old('department_name') }}">
                         @error('department_name')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
@@ -59,8 +59,13 @@
                                     <button type="button" class="btn btn-warning dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" role="menu" style="">
-                                        <a class="dropdown-item" href="{{ route('department.edit', $val->id) }}">Sửa phòng ban</a>
-                                        <a class="dropdown-item" href="#">Xóa phòng ban</a>
+                                        <a class="btn btn-success" style="width:100%" href="{{ route('department.edit', $val->id) }}">Sửa phòng ban</a>
+                                        <form class="btn btn-primary" style="width:100%;margin-top:5px" action="{{ route('department.delete',$val->id) }}" method="post">
+                                            @csrf
+                                            @method('Delete')
+                                            <input type="submit" class="btn-primary" style="width:100%;border:none;" value="Xóa phòng ban" onclick="return confirm('Xóa phòng ban')" />
+                                            </i>
+                                        </form>
                                     </div>
                                 </div>
                             </td>

@@ -19,8 +19,9 @@ Route::get('/', function () {
 
 Route::get('add-member','MemberController@create')->name('member.add');
 
-Route::get('list-department','DepartmentController@create')->name('department.list');
+Route::get('list-department','DepartmentController@index')->name('department.list');
 Route::get('add-department','DepartmentController@create')->name('department.add');
 Route::post('post-department','DepartmentController@store')->name('department.post');
 Route::get('edit-department/{id}','DepartmentController@edit')->name('department.edit');
 Route::put('update-department/{id}','DepartmentController@update')->name('department.update');
+Route::delete('delte-department/{id}','DepartmentController@delete')->name('department.delete');

@@ -9,8 +9,8 @@
                 <h3 class="card-title">Thêm phòng ban</h3>
             </div>
             <form method="POST" action="{{ route('department.update', $data->id) }}">
-                {{ method('put') }}
-                {{ csrf_field() }}
+                @method('put')
+                @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tên phòng ban </label>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-info">Sửa phòng ban</button>
-                    <button type="" class="btn btn-default float-right">Hủy bỏ</button>
+                    <a href="{{ route('department.list') }}" class="btn btn-default float-right">Hủy bỏ</a>
                 </div>
                 <!-- /.card-body -->
             </form>
