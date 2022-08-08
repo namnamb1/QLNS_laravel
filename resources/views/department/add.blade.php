@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-info">Thêm phòng ban</button>
-                    <button type="" class="btn btn-default float-right">Hủy bỏ</button>
+                    <a href="{{ route('department.list') }}" class="btn btn-default float-right">Hủy bỏ</a>
                 </div>
                 <!-- /.card-body -->
             </form>
