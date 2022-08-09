@@ -27,7 +27,6 @@ class CreateTableMembersTable extends Migration
             $table->string('avatar')->nullable();
             $table->integer('role')->default('0');
             $table->bigInteger('department_id');
-            $table->bigInteger('documents_id');
         });
     }
 

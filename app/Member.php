@@ -11,4 +11,20 @@ class Member extends Model
     protected $hidden = [
         'password',
     ];
+    public $timestamps = false;
+
+    public function group()
+    {
+        return $this->belongsToMany(Group::class, 'group_member', 'group_id', 'member_id');
+    }
+
+    public function hasGroup()
+    {
+        return $this->hasMany(GroupMember::class, 'member_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }
