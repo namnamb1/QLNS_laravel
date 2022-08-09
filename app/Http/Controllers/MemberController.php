@@ -48,23 +48,28 @@ class MemberController extends Controller
         }
         $member->save();
 
-        $docment = Document::create([
+        $document = Document::create([
             'member_id' => $member->id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'start_date' => $request->start_date,
             'can_cuoc' => $request->can_cuoc,
             'papers' => $request->start_date,
-            '
-            '
+            'contract' => $request->contract,
         ]);
-
+        if ($request->hasFile('cv_member')) {
+            $newFileName = uniqid() . '-' . $request->cv_member->getClientOriginalName();
+            $cvPath = $request->cv_member->storeAs('public/images/', $newFileName);
+            $document->cv_member = str_replace('public', '', $cvPath);
+        }
+        $document->save();
+// dd($request->group);
         Member::find($member->id)->group()->attach($request->group);
         return redirect('list-member')->with(['message' => 'Thêm nhân viên thành công']);
     }
 
     public function edit()
     {
+        
     }
 
     public function update(Request $request)

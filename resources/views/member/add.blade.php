@@ -103,7 +103,6 @@
                                 @enderror
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -159,14 +158,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="">Hợp đồng </label>
-                    <textarea type="text" class="form-control" name="contract"> </textarea>
+                    <textarea type="text" class="form-control" name="contract">{{ old('contract') }}</textarea>
                     @error('contract')
                     <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="">Giấy tờ nhân viên </label>
-                    <textarea type="text" class="form-control" name="papers"> </textarea>
+                    <textarea type="text" class="form-control" name="papers">{{ old('papers') }} </textarea>
                     @error('papers')
                     <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
@@ -223,13 +222,12 @@
                     </div>
 
                 </div>
-            </div>
-            <!-- /.card-body -->
-            </form>
-            <div class="card-footer">
+            </div><div class="card-footer">
                 <button type="submit" class="btn btn-info">Thêm nhân viên</button>
                 <button type="" class="btn btn-default float-right">Thoát</button>
             </div>
+            </form>
+            
         </div>
     </div>
 </div>

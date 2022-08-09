@@ -36,6 +36,7 @@ class MemberRequest extends FormRequest
             'department_id' => 'required|numeric',
             'group' => 'required',
             'gender' => 'required|numeric',
+            
         ];
     }
 
