@@ -24,11 +24,14 @@
                     <th style="width: 20%">
                         Họ và Tên
                     </th>
-                    <th style="width: 30%">
+                    <th style="width: 20%">
                         Hình ảnh
                     </th>
                     <th>
                         Thuộc phòng ban
+                    </th>
+                    <th>
+                        Ngày hết hạn hợp đồng
                     </th>
                     <th style="width: 8%" class="text-center">
                         Trạng thái
@@ -49,14 +52,15 @@
                         </a>
                     </td>
                     <td>
-                        <ul class="list-inline">
-                            <li class="list-inline-item post-image-thumb thumb-cover">
-                                <img alt="Avatar" class="table-avatar" src="{{asset('storage/' . $val->avatar)}}">
-                            </li>
-                        </ul>
+                        <div class="list-inline-item post-image-thumb thumb-cover">
+                            <img alt="Avatar" class="table-avatar" src="{{asset('storage/' . $val->avatar)}}">
+                        </div>
                     </td>
                     <td class="project_progress">
                         {{ $val->department->department_name}}
+                    </td>
+                    <td>
+                        {{ $val->document->end_date }}
                     </td>
                     <td class="project-state">
                         @if( $val->status == 0 )

@@ -24,9 +24,10 @@ class MemberRequest extends FormRequest
      */
     public function rules()
     {
+        $check = $this->id == null ? 'required|' : ''; 
         return [
             'full_name' => 'required|max:50|min:3|string',
-            'password' => 'required|min:6',
+            'password' =>  $check . 'min:6',
             'email' => ['required','max:255',Rule::unique('members')->ignore($this->id)],
             'avatar' => 'mimes:jpg,png,jpeg|max:2048',
             'calc_shipping_provinces' => 'required|numeric',

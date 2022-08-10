@@ -29,7 +29,8 @@
                         <div class="form-group">
                             <label for="exampleInputFile">Ảnh đại diện</label>
                             <div class="input-group">
-                                <input type="file" class="img-load-input" name="avatar" value="{{old('avatar')}}">
+                                <input type="file" id="image" class="img-load-input" name="avatar" value="{{old('avatar')}}">
+                                <img id="images" width="70" alt="">
                                 @error('avatar')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
@@ -178,7 +179,8 @@
                 <div class="form-group">
                     <label for="exampleInputFile">CV nhân viên</label>
                     <div class="input-group">
-                        <input type="file" name="cv_member">
+                        <input id="images" type="file" name="cv_member">
+                        
                     </div>
                     @error('cv_member')
                     <span class="font-italic text-danger ">{{ $message }}</span>

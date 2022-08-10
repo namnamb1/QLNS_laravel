@@ -346,32 +346,18 @@
     </script>
 
     <script>
-        // js load ảnh khi upload
-        $(document).on('change', '.img-load-input', function() {
-            let input = $(this);
-            displayImage(input, '.wrap-load-image', '.img-load');
-        });
-
-        function displayImage(input, selectorWrap, selectorImg) {
-            input.parents(selectorWrap).find(selectorImg).remove();
-
-            let file = input.prop('files')[0];
-            let reader = new FileReader();
-
-            reader.addEventListener("load", function() {
-                // convert image file to base64 string
-                let img = $('<img />');
-                img.attr({
-                    'src': reader.result,
-                    'alt': file.name,
-                });
-                input.parents(selectorWrap).append(img);
-            }, false);
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        $('#image').on('change', function(e) {
+        var reader = new FileReader();
+        var output = document.getElementById('images');
+        reader.onload = function() {
+            output.src = reader.result;
+        };
+        if (e.target.files[0] == undefined) {
+            output.src = "";
+        } else {
+            reader.readAsDataURL(e.target.files[0]);
         }
+    })
     </script>
 
 </body>

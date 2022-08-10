@@ -102,8 +102,8 @@
                                 <label>Giới tính</label>
                                 <select class="form-control" name="gender">
                                     <option value="">Chọn giới tính</option>
-                                    <option value="0" @if($data->gender == 0) selected @endif>Nam</option>
-                                    <option value="1" @if($data->gender == 1) selected @endif>Nữ</option>
+                                    <option value="1" @if($data->gender == 1) selected @endif>Nam</option>
+                                    <option value="2" @if($data->gender == 2) selected @endif>Nữ</option>
                                 </select>
                                 @error('gender')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
