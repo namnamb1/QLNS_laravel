@@ -26,6 +26,21 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
+    <style>
+        .thumb-cover img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .post-image-thumb {
+            display: block;
+            color: #333;
+            height: 50px;
+            width: 50px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -202,7 +217,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
+                                    <a href="{{ route('member.list') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách nhân viên</p>
                                     </a>
@@ -234,7 +249,7 @@
                         </li>
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Nhóm
                                     <i class="right fas fa-angle-left"></i>
@@ -266,7 +281,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             @if( session('message') != null)
-                <li class="alert alert-success">{{ session('message') }}</li>
+            <li class="alert alert-success">{{ session('message') }}</li>
             @endif
             <div class="content-header">
                 <div class="container-fluid">
@@ -321,6 +336,44 @@
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+    @include('ckfinder::setup')
+    <script src={{ url('ckeditor/ckeditor.js') }}></script>
+    <script>
+        CKEDITOR.replace('text', {
+            height: '550px',
+            filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
+        });
+    </script>
+
+    <script>
+        // js load ảnh khi upload
+        $(document).on('change', '.img-load-input', function() {
+            let input = $(this);
+            displayImage(input, '.wrap-load-image', '.img-load');
+        });
+
+        function displayImage(input, selectorWrap, selectorImg) {
+            input.parents(selectorWrap).find(selectorImg).remove();
+
+            let file = input.prop('files')[0];
+            let reader = new FileReader();
+
+            reader.addEventListener("load", function() {
+                // convert image file to base64 string
+                let img = $('<img />');
+                img.attr({
+                    'src': reader.result,
+                    'alt': file.name,
+                });
+                input.parents(selectorWrap).append(img);
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
 </body>
 
 </html>

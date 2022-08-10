@@ -15,7 +15,7 @@ class Member extends Model
 
     public function group()
     {
-        return $this->belongsToMany(Group::class, 'group_member', 'group_id', 'member_id');
+        return $this->belongsToMany(Group::class, 'group_member', 'member_id', 'group_id');
     }
 
     public function hasGroup()
@@ -25,6 +25,12 @@ class Member extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'department_id');
+        return $this->belongsTo(Department::class,'department_id');
     }
+
+    public function document()
+    {
+        return $this->hasOne(Document::class);
+    }
+
 }

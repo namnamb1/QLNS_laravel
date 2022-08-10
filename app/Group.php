@@ -9,4 +9,9 @@ class Group extends Model
     protected $table = 'groups';
     protected $fillable = ['group_name'];
     public $timestamps = false;
+
+    public function member()
+    {
+        return $this->belongsToMany(Member::class);
+    }
 }

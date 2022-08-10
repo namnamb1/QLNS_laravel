@@ -25,13 +25,15 @@
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputFile">Ảnh đại diện</label>
-                        <div class="input-group">
-                            <input type="file" name="avatar" value="{{old('avatar')}}">
-                            @error('avatar')
-                            <span class="font-italic text-danger ">{{ $message }}</span>
-                            @enderror
+                    <div class="wrap-load-image mb-3">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Ảnh đại diện</label>
+                            <div class="input-group">
+                                <input type="file" class="img-load-input" name="avatar" value="{{old('avatar')}}">
+                                @error('avatar')
+                                <span class="font-italic text-danger ">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,10 +97,13 @@
                                 <label>Giới tính</label>
                                 <select class="form-control" name="gender">
                                     <option value="">Chọn giới tính</option>
-                                    <option value="0" @if(old('gender')==0) selected @endif>Nam</option>
-                                    <option value="1" @if(old('gender')==1) selected @endif>Nữ</option>
+                                    <option value="1" @if(old('gender')==1) selected @endif>Nam</option>
+                                    <option value="2" @if(old('gender')==2) selected @endif>Nữ</option>
                                 </select>
                                 @error('gender')
+                                <span class="font-italic text-danger ">{{ $message }}</span>
+                                @enderror
+                                @error('password')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -122,7 +127,7 @@
                         <div class="col-sm-6">
                             <!-- select -->
                             <div class="form-group">
-                                <label>Chọn role</label>
+                                <label>Chọn quyền</label>
                                 <select class="form-control" name="role">
                                     <option value="0">User</option>
                                     <option value="1" @if(old('role')==1) selected @endif>Admin</option>
@@ -158,7 +163,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="">Hợp đồng </label>
-                    <textarea type="text" class="form-control" name="contract">{{ old('contract') }}</textarea>
+                    <textarea type="text" id="text" class="form-control" name="contract">{{ old('contract') }}</textarea>
                     @error('contract')
                     <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
@@ -199,11 +204,10 @@
                                 </div>
                                 <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" name="start_date" value="{{ old('start_date') }}">
                             </div>
-                            @error('start_date')
-                            <span class="font-italic text-danger ">{{ $message }}</span>
-                            @enderror
-                            <!-- /.input group -->
                         </div>
+                        @error('start_date')
+                        <span class="font-italic text-danger ">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -222,12 +226,13 @@
                     </div>
 
                 </div>
-            </div><div class="card-footer">
+            </div>
+            <div class="card-footer">
                 <button type="submit" class="btn btn-info">Thêm nhân viên</button>
                 <button type="" class="btn btn-default float-right">Thoát</button>
             </div>
             </form>
-            
+
         </div>
     </div>
 </div>

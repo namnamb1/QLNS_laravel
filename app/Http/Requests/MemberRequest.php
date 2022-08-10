@@ -36,7 +36,11 @@ class MemberRequest extends FormRequest
             'department_id' => 'required|numeric',
             'group' => 'required',
             'gender' => 'required|numeric',
-            
+            'contract' => 'required',
+            'papers' => 'required',
+            'can_cuoc' => 'required|numeric',
+            'end_date' => 'required|date|after:start_date',
+            'start_date' => 'required|date',
         ];
     }
 
@@ -59,12 +63,21 @@ class MemberRequest extends FormRequest
             'calc_shipping_district.string' => 'Huyện không hợp lệ',
             'address.required' => 'Địa chỉ không được để trống',
             'brith_date.required' => 'Ngày sinh không được để trống',
-            'brith_date.date_format' => 'Đinh dạng ngày không hợp lệ',
+            'brith_date.date' => 'Đinh dạng ngày không hợp lệ',
             'department_id.required' => 'Phòng ban chưa được chọn',
             'department_id.numeric' => 'Phòng ban không hợp lệ',
             'group.required' => 'Nhóm chưa được chọn',
             'gender.required' => 'Bạn chưa chọn giới tính',
-            'gender.numeric' => 'Giới tính không hợp lệ'
+            'gender.numeric' => 'Giới tính không hợp lệ',
+            'contract.required' => 'Hợp đồng không được để trống',
+            'papers.required' => 'Thông tin không được để trống',
+            'can_cuoc.numeric' => 'Căn cước không lệ không hợp lệ',
+            'can_cuoc.required' => 'Căn cước không được để trống',
+            'end_date.required' => 'Chưa chọn ngày kết thúc hợp đồng',
+            'end_date.date' => 'Đinh dạng ngày không hợp lệ',
+            'end_date.after' => 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu',
+            'start_date.required' => 'Chưa chọn ngày bắt đầu hợp đồng',
+            'start_date.date' => 'Đinh dạng ngày không hợp lệ',
         ];
     }
 }
