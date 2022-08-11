@@ -16,13 +16,15 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
+use App\Cities;
 
 Route::get('/', function () {
+    
     return view('layout');
 })->middleware('checkAdmin')->name('home');
 
 Route::middleware('checkLogin')->group(function () {
-    Route::get('list-member', 'MemberController@index')->name('member.list');
+    Route::get('list-member', 'MemberController@index')->name('member.list')->middleware('checkAdmin:admin');
     Route::get('add-member', 'MemberController@create')->name('member.add');
     Route::post('post-member', 'MemberController@store')->name('member.post');
     Route::get('edit-member/{id}', 'MemberController@edit')->name('member.edit');
@@ -45,7 +47,7 @@ Route::middleware('checkLogin')->group(function () {
     Route::delete('delte-group/{id}', 'GroupController@delete')->name('group.delete');
 
     Route::get('profile', 'ProfileController@edit')->name('profile.edit');
-    // Route::store('post-profile', 'ProfileController@store')->name('profile.post');
+    Route::post('post-profile', 'ProfileController@store')->name('profile.post');
 });
 
 

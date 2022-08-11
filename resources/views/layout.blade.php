@@ -99,7 +99,7 @@
                         <img src="{{asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="{{ route('profile.edit') }}" class="d-block">Alexander Pierce</a>
                     </div>
                 </div>
 
@@ -251,6 +251,49 @@
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+
+    <script>
+        let city = <?= json_encode($city) ?? [] ?>;
+        let oldCity = <?= json_encode(old('calc_shipping_provinces')) ?? '' ?>;
+        let oldDistrict = <?= json_encode(old('calc_shipping_district')) ?? '' ?>;
+        let optionCity = `<option value="">Tỉnh / Thành phố</option>`;
+        let optionDistrict = `<option value="">Quận / Huyện</option>`;
+
+        function getData() {
+            $.each(city, function(index, value) {
+                const checked = (oldCity == value.id) ? `selected` : ``;
+                console.log(checked);
+                optionCity += `<option ${checked} value="${value.id}">${value.name}</option>`
+                $.each(value.districts, function(index, value) {
+                    const checked = (oldDistrict == value.id) ? `selected` : ``;
+                    optionDistrict += `<option ${checked} value="${value.id}">${value.name}</option>`;
+                });
+            });
+
+            $('#city').html(optionCity);
+            $('#district').html(optionDistrict);
+        }
+
+        getData();
+
+        $('#city').on('change', function() {
+            if($('#city').val() !== ''){
+                optionDistrict = ``;
+                $.each(city, function(index, value) {
+                    if (value.id == $('#city').val()) {
+                        $.each(value.districts, function(index, value) {
+                            optionDistrict += `<option value="${value.id}">${value.name}</option>`;
+                        });
+                    }
+                });
+                $('#district').html(optionDistrict);
+            } else {
+                getData();
+            }
+        });
+
+    </script>
+
     @include('ckfinder::setup')
     <script src={{ url('ckeditor/ckeditor.js') }}></script>
     <script>

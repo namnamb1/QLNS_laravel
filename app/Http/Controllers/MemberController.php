@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Cities;
 use App\Department;
+use App\Districts;
 use App\Document;
 use App\Group;
 use App\GroupMember;
@@ -45,7 +47,7 @@ class MemberController extends Controller
         }
 
         if ($status) {
-            $list = $list->where('members.status','=',$status);
+            $list = $list->where('members.status', '=', $status);
         }
 
         $list = $list->orderBy('members.id', 'desc')->paginate(10);
@@ -55,9 +57,10 @@ class MemberController extends Controller
 
     public function create()
     {
+        $city = Cities::with('districts')->get();
         $departments = Department::all();
         $groups = Group::all();
-        return view('member.add', compact('departments', 'groups'));
+        return view('member.add', compact('departments', 'groups', 'city'));
     }
 
     public function store(MemberRequest $request)

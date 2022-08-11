@@ -6,10 +6,9 @@
         <!-- Input addon -->
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Sửa nhân viên</h3>
+                <h3 class="card-title">Yêu cầu sửa lại thông tin</h3>
             </div>
-            <form action="{{ route('member.update',$data->id) }}" method="post" enctype="multipart/form-data">
-                @method('put')
+            <form action="{{ route('profile.post') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -56,9 +55,8 @@
                             <!-- select -->
                             <div class="form-group">
                                 <label>Tỉnh</label>
-                                <select class="form-control" name="calc_shipping_provinces">
-                                    <option value="">Tỉnh / Thành phố</option>
-                                    <option value="" @if($data->tinh) @endif>Tỉnh / Thành phố</option>
+                                <select class="form-control" name="calc_shipping_provinces" id="city">
+                                
                                 </select>
                                 @error('calc_shipping_provinces')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
@@ -68,8 +66,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Huyện</label>
-                                <select class="form-control" name="calc_shipping_district">
-                                    <option value="">Quận / Huyện</option>
+                                <select class="form-control" name="calc_shipping_district" id="district">
+                                    
                                 </select>
                                 @error('calc_shipping_district')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
