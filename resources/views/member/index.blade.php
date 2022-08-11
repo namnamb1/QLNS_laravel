@@ -2,14 +2,56 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Danh sách nhân viên</h3>
-        <div class="card-tools">
-            <form class="input-group input-group-sm" style="width: 250px;">
-                <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm nhân viên" value="{{ $keyword }}">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                    </button>
+        <div class="box-body">
+            <form class="row">
+                <div class="col-sm-2">
+                    <label for="">Tên nhân viên:</label>
+                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm nhân viên" value="{{ $keyword }}">
+                </div>
+                <div class="col-sm-2">
+                    <label for="">Ngày vào:</label>
+                    <input type="date" class="form-control" name="start_date" placeholder="Chọn ngày bắt đầu" autocomplete="off" value="{{ $start_date }}">
+                </div>
+                <div class="col-sm-2">
+                    <label for="">Ngày kết thúc:</label>
+                    <input type="date" class="form-control" name="end_date" placeholder="Chọn ngày kết thúc" autocomplete="off" value="{{ $end_date }}">
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Chọn tỉnh:</label>
+                        <select class="form-control" name="tinh">
+                            <option value="">Chọn tỉnh</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="">Chọn huyện:</label>
+                    <select class="form-control" name="huyen">
+                        <option value="">Chọn huyện</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="">Chọn trạng thái:</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="status" id="optionsRadios1" value="0">
+                                Đang làm việc
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="status" id="optionsRadios2" value="1">
+                                Đã nghỉ
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-right" style="width: 100%;">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-info ">Tìm kiếm</button>
+                        <button type="reset" class="btn btn-warning"> Hủy bỏ</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -44,7 +86,7 @@
                 @foreach($list as $val)
                 <tr>
                     <td>
-                        {{ $val->id }}
+                        {{ $val->member_id ?? $val->id }}
                     </td>
                     <td>
                         <a>
@@ -60,7 +102,7 @@
                         {{ $val->department->department_name}}
                     </td>
                     <td>
-                        {{ $val->document->end_date }}
+                        {{ $val->end_date }}
                     </td>
                     <td class="project-state">
                         @if( $val->status == 0 )
@@ -70,18 +112,18 @@
                         @endif
                     </td>
                     <td class="project-actions text-right">
-                        <a class="btn btn-primary btn-sm" href="{{route('member.show',$val->id)}}">
+                        <a class="btn btn-primary btn-sm" href="{{route('member.show',$val->member_id ?? $val->id)}}">
                             <i class="fas fa-folder">
                             </i>
                             View
                         </a>
-                        <a class="btn btn-info btn-sm" href="{{ route('member.edit', $val->id) }}">
+                        <a class="btn btn-info btn-sm" href="{{ route('member.edit', $val->member_id ?? $val->id) }}">
                             <i class="fas fa-pencil-alt">
                             </i>
                             Edit
                         </a>
 
-                        <form class="btn btn-sm" action="{{ route('member.delete',$val->id) }}" method="post">
+                        <form class="btn btn-sm" action="{{ route('member.delete', $val->member_id ?? $val->id) }}" method="post">
                             @csrf
                             @method('Delete')
                             <input type="submit" class="btn-danger" value="Delete" onclick="return confirm('Xóa nhóm')" />

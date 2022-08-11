@@ -19,26 +19,23 @@
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="exampleInputPassword1">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder="Password" name="password" value="{{old('password')}}">
-                        @error('password')
-                        <span class="font-italic text-danger ">{{ $message }}</span>
-                        @enderror
-                    </div> -->
                     <div class="form-group">
                         <label for="exampleInputFile">Ảnh đại diện</label>
                         <div class="input-group">
-                            <input type="file" name="avatar" value="{{old('avatar')}}">
-                            @error('avatar')
-                            <span class="font-italic text-danger ">{{ $message }}</span>
-                            @enderror
+                            <input id="image" type="file" name="avatar" value="">
+                            @if($data->avatar)
+                            <div class="image-member thumb-cover">
+                                <img src="{{asset('storage/' . $data->avatar)}}" alt="User profile picture">
+                            </div>
+                            @else
+                            <div class="image-member thumb-cover">
+                                <img id="images" alt="">
+                            </div>
+                            @endif
                         </div>
-                        @if($data->avatar)
-                        <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/' . $data->avatar)}}" alt="User profile picture">
-                        </div>
-                        @endif
+                        @error('avatar')
+                        <span class="font-italic text-danger ">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="">Họ và tên</label>

@@ -59,7 +59,7 @@
                                     <button type="button" class="btn btn-warning" data-toggle="dropdown" aria-expanded="false">Lựa chọn</button>
                                     <button type="button" class="btn btn-warning dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
-                                    <div class="dropdown-menu" role="menu" style="">
+                                    <div class="dropdown-menu" role="menu">
                                         <a class="dropdown-item" href="{{ route('group.edit', $val->id) }}">Sửa nhóm</a>
                                         <a class="dropdown-item" href="#">Xóa nhóm</a>
                                     </div>

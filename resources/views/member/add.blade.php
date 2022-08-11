@@ -30,10 +30,12 @@
                             <label for="exampleInputFile">Ảnh đại diện</label>
                             <div class="input-group">
                                 <input type="file" id="image" class="img-load-input" name="avatar" value="{{old('avatar')}}">
-                                <img id="images" width="70" alt="">
                                 @error('avatar')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="image-member thumb-cover">
+                                <img  id="images" alt="">
                             </div>
                         </div>
                     </div>
@@ -104,9 +106,6 @@
                                 @error('gender')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
-                                @error('password')
-                                <span class="font-italic text-danger ">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                     </div>
@@ -136,6 +135,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">

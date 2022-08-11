@@ -9,6 +9,7 @@ use App\GroupMember;
 use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -17,13 +18,39 @@ class MemberController extends Controller
         $list = new Member();
 
         $keyword = $request->keyword;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $status = $request->status;
+
+        $list = $list->join('documents', 'members.id', '=', 'documents.member_id');
+
         if ($keyword) {
             $list = $list->where('full_name', 'like', "%" . $keyword . "%");
         }
 
-        $list = $list->orderBy('id', 'desc')->paginate(10);
+        if ($start_date) {
+            $start_date = date('Y-m-d', strtotime($start_date));
+            $list = $list->where('documents.start_date', '>=', $start_date);
+            // dd($list);
+        }
 
-        return view('member.index', compact('list', 'keyword'));
+        if ($end_date) {
+            $end_date = date('Y-m-d', strtotime($end_date));
+            $list = $list->where('documents.end_date', '<=', $end_date);
+        }
+
+        if ($end_date) {
+            $end_date = date('Y-m-d', strtotime($end_date));
+            $list = $list->where('documents.end_date', '<=', $end_date);
+        }
+
+        if ($status) {
+            $list = $list->where('members.status','=',$status);
+        }
+
+        $list = $list->orderBy('members.id', 'desc')->paginate(10);
+
+        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date'));
     }
 
     public function create()
@@ -39,7 +66,7 @@ class MemberController extends Controller
         $member = Member::create([
             'full_name' => $request->full_name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'gender' => $request->gender,
             'tinh' => $request->calc_shipping_provinces,
             'huyen' => $request->calc_shipping_district,
@@ -86,43 +113,43 @@ class MemberController extends Controller
 
     public function update(MemberRequest $request, $id)
     {
-            $member = Member::findOrFail($id);
-            $member->update([
-                'full_name' => $request->full_name,
-                'email' => $request->email,
-                'gender' => $request->gender,
-                'tinh' => $request->calc_shipping_provinces,
-                'huyen' => $request->calc_shipping_district,
-                'address' => $request->address,
-                'brith_date' => $request->brith_date,
-                'role' => $request->role,
-                'status' => $request->status,
-                'department_id' => $request->department_id,
-            ]);
+        $member = Member::findOrFail($id);
+        $member->update([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'tinh' => $request->calc_shipping_provinces,
+            'huyen' => $request->calc_shipping_district,
+            'address' => $request->address,
+            'brith_date' => $request->brith_date,
+            'role' => $request->role,
+            'status' => $request->status,
+            'department_id' => $request->department_id,
+        ]);
 
-            if ($request->hasFile('avatar')) {
-                $newFileName = uniqid() . '-' . $request->avatar->getClientOriginalName();
-                $imagePath = $request->avatar->storeAs('public/images/', $newFileName);
-                $member->avatar = str_replace('public', '', $imagePath);
-            }
-            $member->save();
+        if ($request->hasFile('avatar')) {
+            $newFileName = uniqid() . '-' . $request->avatar->getClientOriginalName();
+            $imagePath = $request->avatar->storeAs('public/images/', $newFileName);
+            $member->avatar = str_replace('public', '', $imagePath);
+        }
+        $member->save();
 
-            $document = Document::where('member_id', $id)->first();
-            $document->update([
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'can_cuoc' => $request->can_cuoc,
-                'papers' => $request->papers,
-                'contract' => $request->contract,
-            ]);
-            if ($request->hasFile('cv_member')) {
-                $newFileName = uniqid() . '-' . $request->cv_member->getClientOriginalName();
-                $cvPath = $request->cv_member->storeAs('public/images/', $newFileName);
-                $document->cv_member = str_replace('public', '', $cvPath);
-            }
-            $document->save();
+        $document = Document::where('member_id', $id)->first();
+        $document->update([
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'can_cuoc' => $request->can_cuoc,
+            'papers' => $request->papers,
+            'contract' => $request->contract,
+        ]);
+        if ($request->hasFile('cv_member')) {
+            $newFileName = uniqid() . '-' . $request->cv_member->getClientOriginalName();
+            $cvPath = $request->cv_member->storeAs('public/images/', $newFileName);
+            $document->cv_member = str_replace('public', '', $cvPath);
+        }
+        $document->save();
 
-            Member::find($member->id)->group()->sync($request->group);
+        Member::find($member->id)->group()->sync($request->group);
 
         return redirect('list-member')->with(['message' => 'Cập nhật nhân viên thành công']);
     }

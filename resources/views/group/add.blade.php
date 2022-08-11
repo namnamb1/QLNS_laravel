@@ -58,7 +58,7 @@
                                     <button type="button" class="btn btn-warning" data-toggle="dropdown" aria-expanded="false">Lựa chọn</button>
                                     <button type="button" class="btn btn-warning dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
-                                    <div class="dropdown-menu" role="menu" style="">
+                                    <div class="dropdown-menu" role="menu">
                                         <a class="btn btn-success" style="width:100%" href="{{ route('group.edit', $val->id) }}">Sửa nhóm</a>
                                         <form class="btn btn-primary" style="width:100%;margin-top:5px" action="{{ route('group.delete',$val->id) }}" method="post">
                                             @csrf
