@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" value="{{ $data->email }}">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" value="{{ old('email',$data->email) }}">
                         @error('email')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
@@ -39,14 +39,14 @@
                     </div>
                     <div class="form-group">
                         <label for="">Họ và tên</label>
-                        <input type="text" class="form-control" placeholder="Họ và tên" name="full_name" value="{{ $data->full_name }}">
+                        <input type="text" class="form-control" placeholder="Họ và tên" name="full_name" value="{{ old('full_name',$data->full_name) }}">
                         @error('full_name')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="">Địa chỉ</label>
-                        <input type="text" class="form-control" placeholder="Địa chỉ" name="address" value="{{ $data->address }}">
+                        <input type="text" class="form-control" placeholder="Địa chỉ" name="address" value="{{ old('address',$data->address) }}">
                         @error('address')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
@@ -55,10 +55,9 @@
                         <div class="col-sm-6">
                             <!-- select -->
                             <div class="form-group">
-                                <label>Tỉnh</label>
-                                <select class="form-control" name="calc_shipping_provinces">
-                                    <option value="">Tỉnh / Thành phố</option>
-                                    <option value="" @if($data->tinh) @endif>Tỉnh / Thành phố</option>
+                                <label>Tỉnh/Thành phố</label>
+                                <select class="form-control" name="calc_shipping_provinces" id="city">
+                                    <option value="">Tỉnh</option>
                                 </select>
                                 @error('calc_shipping_provinces')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
@@ -68,7 +67,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Huyện</label>
-                                <select class="form-control" name="calc_shipping_district">
+                                <select class="form-control" name="calc_shipping_district" id="district">
                                     <option value="">Quận / Huyện</option>
                                 </select>
                                 @error('calc_shipping_district')
@@ -86,7 +85,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                     </div>
-                                    <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" name="brith_date" value="{{$data->brith_date }}">
+                                    <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" name="brith_date" value="{{old('brith_date',$data->brith_date) }}">
                                 </div>
                                 @error('brith_date')
                                 <span class="font-italic text-danger ">{{ $message }}</span>

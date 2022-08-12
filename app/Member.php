@@ -36,4 +36,14 @@ class Member extends Authenticatable
         return $this->hasOne(Document::class);
     }
 
+    public function city()
+    {
+        return $this->hasOne(Cities::class);
+    }
+
+    public function districts()
+    {
+        return $this->hasOne(Districts::class);
+    }
+
 }

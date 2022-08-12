@@ -17,11 +17,11 @@ class CheckAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::check() && Auth::user()->role ) {
-            
+
             return $next($request);
             
         } else {
-            return redirect("/login")->with(['message' => 'Hãy đăng nhập để tiếp tục!']);
+            return redirect()->back()->with(['message' => 'Chỉ Admin mới có quyền!']);
         }
     }
 }

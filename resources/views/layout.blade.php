@@ -99,7 +99,7 @@
                         <img src="{{asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="{{ route('profile.edit') }}" class="d-block">Alexander Pierce</a>
+                        <a href="{{ route('profile.add') }}" class="d-block">Tên</a>
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
                             <a href="{{ route('member.add') }}" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <i class="fas fa-users"></i>
                                 <p>
                                     Nhân viên
                                     <i class="right fas fa-angle-left"></i>
@@ -176,6 +176,37 @@
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Yêu cầu sửa tài khoản
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('profile.add') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tạo yêu cầu</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('profile.list') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách các yêu cầu</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('password.index') }}" class="nav-link active">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Đổi mật khẩu
+                                </p>
+                            </a>
                         </li>
                         <li class="nav-item menu-open">
                             <a href="{{ route('logout') }}" class="nav-link active">
@@ -258,14 +289,23 @@
         let oldDistrict = <?= json_encode(old('calc_shipping_district')) ?? '' ?>;
         let optionCity = `<option value="">Tỉnh / Thành phố</option>`;
         let optionDistrict = `<option value="">Quận / Huyện</option>`;
+        let id = <?= json_encode($data ?? [])?>;
+        console.log(id);
 
         function getData() {
             $.each(city, function(index, value) {
-                const checked = (oldCity == value.id) ? `selected` : ``;
-                console.log(checked);
+                let checked = (oldCity == value.id && id.id == '') ? `selected` : ``;
+                if(id.tinh == value.id && id !== ''){
+                    checked = (id.tinh !== undefined) ? 'selected' : ``;
+                }
+
                 optionCity += `<option ${checked} value="${value.id}">${value.name}</option>`
                 $.each(value.districts, function(index, value) {
-                    const checked = (oldDistrict == value.id) ? `selected` : ``;
+                    let checked = (oldDistrict == value.id && id.id == '') ? `selected` : ``;
+                    if(id.huyen == value.id && id !== ''){
+                        checked = (id.huyen !== undefined) ? 'selected' : ``;
+                    }
+                    console.log(checked);
                     optionDistrict += `<option ${checked} value="${value.id}">${value.name}</option>`;
                 });
             });

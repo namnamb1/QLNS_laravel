@@ -113,7 +113,7 @@
                     </td>
                     <td class="project-actions text-right">
                         <a class="btn btn-primary btn-sm" href="{{route('member.show',$val->member_id ?? $val->id)}}">
-                            <i class="fas fa-folder">
+                            <i class="fas fa-eye">
                             </i>
                             View
                         </a>

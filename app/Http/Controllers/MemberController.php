@@ -91,7 +91,7 @@ class MemberController extends Controller
             'member_id' => $member->id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'can_cuoc' => $request->can_cuoc,
+            'can_cuoc' => Hash::make($request->can_cuoc),
             'papers' => $request->papers,
             'contract' => $request->contract,
         ]);

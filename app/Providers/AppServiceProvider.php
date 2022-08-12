@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Cities;
+use App\Member;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // $id = Auth::id();
+        //  dd(auth()->id());
+        $data['city'] = Cities::with('districts')->get();
+        //     
+        // dd($data['city']);
+        view()->share($data);
     }
 }
