@@ -152,8 +152,8 @@
                             <div class="form-group">
                                 <label>Chọn trạng thái</label>
                                 <select class="form-control" name="status">
-                                    <option value="0" @if($data->status == 0) selected @endif>Đang làm việc</option>
-                                    <option value="1" @if($data->status == 1) selected @endif>Đã nghỉ</option>
+                                    <option value="1" @if($data->status == 0) selected @endif>Đang làm việc</option>
+                                    <option value="2" @if($data->status == 1) selected @endif>Đã nghỉ</option>
                                 </select>
                                 @error('status')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
@@ -246,8 +246,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
 <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>

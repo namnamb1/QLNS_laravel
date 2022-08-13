@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder="Password" name="password" value="{{old('password')}}">
+                        <input type="password" class="form-control" placeholder="Password" name="password" value="">
                         @error('password')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="exampleInputFile">Ảnh đại diện</label>
                             <div class="input-group">
-                                <input type="file" id="image" class="img-load-input" name="avatar" value="{{old('avatar')}}">
+                                <input type="file" id="image" class="img-load-input" name="avatar" value="">
                                 @error('avatar')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
@@ -161,15 +161,15 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="">Hợp đồng </label>
-                    <textarea type="text" id="text" class="form-control" name="contract">{{ old('contract') }}</textarea>
+                    <label for="">Hợp đồng nhân viên</label>
+                    <input type="file" class="form-control-file" name="contract">
                     @error('contract')
-                    <span class="font-italic text-danger ">{{ $message }}</span>
+                        <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="">Giấy tờ nhân viên </label>
-                    <textarea type="text" class="form-control" name="papers">{{ old('papers') }} </textarea>
+                    <label for="">Giấy tờ nhân viên</label>
+                    <input type="file" class="form-control-file"  name="papers">
                     @error('papers')
                     <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
@@ -177,8 +177,7 @@
                 <div class="form-group">
                     <label for="exampleInputFile">CV nhân viên</label>
                     <div class="input-group">
-                        <input id="images" type="file" name="cv_member">
-
+                        <input class="form-control-file" type="file" name="cv_member">
                     </div>
                     @error('cv_member')
                     <span class="font-italic text-danger ">{{ $message }}</span>

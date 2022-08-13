@@ -18,39 +18,41 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label>Chọn tỉnh:</label>
-                        <select class="form-control" name="tinh">
-                            <option value="">Chọn tỉnh</option>
+                        <label>Tỉnh/Thành phố</label>
+                        <select class="form-control" name="calc_shipping_provinces" id="city">
+                            <option value="">Tỉnh/Thành phố</option>
                         </select>
+                        @error('calc_shipping_provinces')
+                        <span class="font-italic text-danger ">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="">Chọn huyện:</label>
-                    <select class="form-control" name="huyen">
-                        <option value="">Chọn huyện</option>
-                    </select>
+                <div class="form-group">
+                        <label>Huyện</label>
+                        <select class="form-control" name="calc_shipping_district" id="district">
+                            <option value="">Quận / Huyện</option>
+                        </select>
+                        @error('calc_shipping_district')
+                        <span class="font-italic text-danger ">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="">Chọn trạng thái:</label>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="status" id="optionsRadios1" value="0">
-                                Đang làm việc
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="status" id="optionsRadios2" value="1">
-                                Đã nghỉ
-                            </label>
+                            <label>Chọn trạng thái</label>
+                            <select class="form-control" name="status" >
+                                <option value="0">Chọn trạng thái</option>
+                                <option value="1">Đang làm việc</option>
+                                <option value="2">Đã nghỉ việc</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="float-right" style="width: 100%;">
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-info ">Tìm kiếm</button>
-                        <button type="reset" class="btn btn-warning"> Hủy bỏ</button>
+                        <a href="{{ route('member.reset') }}" class="btn btn-warning"> Hủy bỏ</a>
                     </div>
                 </div>
             </form>
@@ -105,7 +107,7 @@
                         {{ $val->end_date }}
                     </td>
                     <td class="project-state">
-                        @if( $val->status == 0 )
+                        @if( $val->status == 1 )
                         <span class="badge badge-success">Đang làm việc</span>
                         @else
                         <span class="badge badge-danger">Đã nghỉ</span>

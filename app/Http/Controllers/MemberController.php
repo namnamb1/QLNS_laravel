@@ -23,6 +23,8 @@ class MemberController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $status = $request->status;
+        $city = $request->calc_shipping_provinces;
+        $district = $request->calc_shipping_district;
 
         $list = $list->join('documents', 'members.id', '=', 'documents.member_id');
 
@@ -33,7 +35,6 @@ class MemberController extends Controller
         if ($start_date) {
             $start_date = date('Y-m-d', strtotime($start_date));
             $list = $list->where('documents.start_date', '>=', $start_date);
-            // dd($list);
         }
 
         if ($end_date) {
@@ -50,8 +51,16 @@ class MemberController extends Controller
             $list = $list->where('members.status', '=', $status);
         }
 
-        $list = $list->orderBy('members.id', 'desc')->paginate(10);
+        if ($city) {
+            $list = $list->where('tinh', '=', $city);
+        }
 
+        if ($district) {
+            $list = $list->where('huyen', '=', $district);
+        }
+
+        $list = $list->orderBy('members.id', 'desc')->paginate(10);
+        
         return view('member.index', compact('list', 'keyword', 'start_date', 'end_date'));
     }
 
@@ -76,7 +85,7 @@ class MemberController extends Controller
             'address' => $request->address,
             'brith_date' => $request->brith_date,
             'role' => $request->role,
-            'status' => 0,
+            'status' => 1,
             'department_id' => $request->department_id,
         ]);
 
@@ -92,9 +101,18 @@ class MemberController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'can_cuoc' => Hash::make($request->can_cuoc),
-            'papers' => $request->papers,
-            'contract' => $request->contract,
         ]);
+
+        if ($request->hasFile('papers')) {
+            $newFileName = uniqid() . '-' . $request->papers->getClientOriginalName();
+            $cvPath = $request->papers->storeAs('public/images/', $newFileName);
+            $document->papers = str_replace('public', '', $cvPath);
+        }
+        if ($request->hasFile('contract')) {
+            $newFileName = uniqid() . '-' . $request->contract->getClientOriginalName();
+            $cvPath = $request->contract->storeAs('public/images/', $newFileName);
+            $document->contract = str_replace('public', '', $cvPath);
+        }
         if ($request->hasFile('cv_member')) {
             $newFileName = uniqid() . '-' . $request->cv_member->getClientOriginalName();
             $cvPath = $request->cv_member->storeAs('public/images/', $newFileName);
@@ -170,5 +188,10 @@ class MemberController extends Controller
         $data = Member::findOrFail($id);
 
         return view('member.show', compact('data'));
+    }
+
+    public function resetKeyword()
+    {
+        return redirect('list-member');
     }
 }

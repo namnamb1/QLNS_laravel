@@ -15,15 +15,15 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+
 use Illuminate\Support\Facades\Auth;
 use App\Cities;
 
 Route::middleware('checkLogin')->group(function () {
-    Route::get('/', function () {
-    
-        return view('layout');
-    })->name('home');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::get('list-member', 'MemberController@index')->name('member.list');
+    Route::get('resetkeyword', 'MemberController@resetKeyword')->name('member.reset');
     Route::get('add-member', 'MemberController@create')->name('member.add')->middleware('checkAdmin:admin');
     Route::post('post-member', 'MemberController@store')->name('member.post')->middleware('checkAdmin:admin');
     Route::get('edit-member/{id}', 'MemberController@edit')->name('member.edit')->middleware('checkAdmin:admin');

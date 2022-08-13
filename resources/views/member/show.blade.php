@@ -81,8 +81,12 @@
                                             <span class="float-left b">Từ {{ date('d-m-Y',strtotime($data->document->start_date)) }}   Đến ngày {{ date('d-m-Y',strtotime($data->document->end_date)) }}</span>
                                         </strong>
                                     </div>
-                                    <div class="content">
-                                        {!! $data->document->contract !!}
+                                    <div class="tab-pane" >
+                                        @if($data->document->contract)
+                                        <iframe width="100%" height="800px" src="{{asset('storage/' . $data->document->contract)}}"></iframe>
+                                        @else
+                                        <span class="btn bg-danger">Chưa thêm hợp đồng nhân viên</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

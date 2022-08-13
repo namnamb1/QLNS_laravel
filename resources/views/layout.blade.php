@@ -95,12 +95,9 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
+                    <a class="image" href="{{ route('profile.add') }}">
                         <img src="{{asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="{{ route('profile.add') }}" class="d-block">Tên</a>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Sidebar Menu -->
@@ -108,6 +105,15 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('home') }}" class="nav-link active">
+                            <i class="fas fa-users"></i>
+                                <p>
+                                    Trang chủ
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item menu-open">
                             <a href="{{ route('member.add') }}" class="nav-link active">
                             <i class="fas fa-users"></i>
@@ -282,6 +288,41 @@
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+         const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+    const myChart = new Chart(
+        document.getElementById('chartMonth'),
+        config
+    );
+    </script>
+
+
+
+
 
     <script>
         let city = <?= json_encode($city) ?? [] ?>;
