@@ -8,16 +8,23 @@ use App\Districts;
 use App\Document;
 use App\Group;
 use App\GroupMember;
+use App\Http\Helpers\Helper;
 use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\TextUI\Help;
 
 class MemberController extends Controller
 {
     public function index(Request $request)
     {
         $list = new Member();
+
+        $helper = new Helper();
+        $dataCity = Cities::orderby('name')->get();
+        $dataDistrict = Districts::orderby('name')->get();
+        $cities = $helper->cities($dataCity);
 
         $keyword = $request->keyword;
         $start_date = $request->start_date;
@@ -60,16 +67,20 @@ class MemberController extends Controller
         }
 
         $list = $list->orderBy('members.id', 'desc')->paginate(10);
-        
-        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date'));
+
+        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date', 'cities','dataCity'));
     }
 
     public function create()
     {
-        $city = Cities::with('districts')->get();
         $departments = Department::all();
         $groups = Group::all();
-        return view('member.add', compact('departments', 'groups', 'city'));
+
+        $adress = new Helper();
+        $dataCity = Cities::orderby('name')->get();
+        $cities = $adress->cities($dataCity);
+
+        return view('member.add', compact('departments', 'groups', 'cities','dataCity'));
     }
 
     public function store(MemberRequest $request)
@@ -129,7 +140,12 @@ class MemberController extends Controller
         $data = Member::findOrFail($id);
         $departments = Department::all();
         $groups = Group::all();
-        return view('member.edit', compact('data', 'departments', 'groups'));
+        $adress = new Helper();
+        $dataCity = Cities::orderby('name')->get();
+        $dataDistrict = Districts::orderby('name')->get();
+        $cities = $adress->cities($dataCity);
+
+        return view('member.edit', compact('data', 'departments', 'groups','cities','dataCity','dataDistrict'));
     }
 
     public function update(MemberRequest $request, $id)
@@ -160,9 +176,17 @@ class MemberController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'can_cuoc' => $request->can_cuoc,
-            'papers' => $request->papers,
-            'contract' => $request->contract,
         ]);
+        if ($request->hasFile('papers')) {
+            $newFileName = uniqid() . '-' . $request->papers->getClientOriginalName();
+            $cvPath = $request->papers->storeAs('public/images/', $newFileName);
+            $document->papers = str_replace('public', '', $cvPath);
+        }
+        if ($request->hasFile('contract')) {
+            $newFileName = uniqid() . '-' . $request->contract->getClientOriginalName();
+            $cvPath = $request->contract->storeAs('public/images/', $newFileName);
+            $document->contract = str_replace('public', '', $cvPath);
+        }
         if ($request->hasFile('cv_member')) {
             $newFileName = uniqid() . '-' . $request->cv_member->getClientOriginalName();
             $cvPath = $request->cv_member->storeAs('public/images/', $newFileName);

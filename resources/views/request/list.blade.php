@@ -52,7 +52,7 @@
                         </div>
                     </td>
                     <td class="project-state">
-                        @if( $val->status == 0 )
+                        @if( $val->status == 1 )
                         <span class="badge badge-success">Đang làm việc</span>
                         @else
                         <span class="badge badge-danger">Đã nghỉ</span>

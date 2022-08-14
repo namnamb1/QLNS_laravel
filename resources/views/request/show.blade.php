@@ -48,9 +48,12 @@
                         <div class="col-sm-6">
                             <!-- select -->
                             <div class="form-group">
-                                <label>Tỉnh</label>
-                                <select class="form-control" name="calc_shipping_provinces" id="city">
-                                
+                                <label>Tỉnh/Thành phố</label>
+                                <select name="calc_shipping_provinces" id="city" class="form-control" data-url="{{ route('ajax.address.districts') }}" required="required">
+                                    <option value="">Chọn tỉnh/Thành phố</option>
+                                    @foreach ($dataCity as $val)
+                                    <option {{$data->rq_tinh == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->name}}</option>
+                                    @endforeach
                                 </select>
                                 @error('calc_shipping_provinces')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
@@ -61,7 +64,10 @@
                             <div class="form-group">
                                 <label>Huyện</label>
                                 <select class="form-control" name="calc_shipping_district" id="district">
-                                    
+                                    <option value="">Quận / Huyện</option>
+                                    @foreach ($dataDistrict as $val)
+                                    <option {{$data->rq_huyen == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->name}}</option>
+                                    @endforeach
                                 </select>
                                 @error('calc_shipping_district')
                                 <span class="font-italic text-danger ">{{ $message }}</span>

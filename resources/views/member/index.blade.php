@@ -19,8 +19,11 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label>Tỉnh/Thành phố</label>
-                        <select class="form-control" name="calc_shipping_provinces" id="city">
-                            <option value="">Tỉnh/Thành phố</option>
+                        <select name="calc_shipping_provinces" id="city" class="form-control" data-url="{{ route('ajax.address.districts') }}">
+                            <option value="">Chọn tỉnh/Thành phố</option>
+                            @foreach ($dataCity as $val)
+                                <option  @if(old('calc_shipping_provinces')==$val->id) selected @endif value="{{$val->id}}">{{$val->name}}</option>
+                            @endforeach
                         </select>
                         @error('calc_shipping_provinces')
                         <span class="font-italic text-danger ">{{ $message }}</span>

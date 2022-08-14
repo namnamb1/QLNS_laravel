@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Cities;
+use App\Districts;
+use App\Http\Helpers\Helper;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Member;
@@ -17,7 +19,7 @@ class ProfileController extends Controller
     {
         $data = new AppRequest();
         $keyword = $request->keyword;
-        $data = $data->join('members', 'members.id', '=', 'requests.member_id')->where('rq_status','0');
+        $data = $data->join('members', 'members.id', '=', 'requests.member_id')->where('rq_status', '0');
         if ($keyword) {
             $data = $data->where('members.full_name', 'like', "%" . $keyword . "%");
         }
@@ -29,9 +31,14 @@ class ProfileController extends Controller
     public function create()
     {
         $id = Auth::id();
+        $adress = new Helper();
+        $dataCity = Cities::orderby('name')->get();
+        $dataDistrict = Districts::orderby('name')->get();
+        $cities = $adress->cities($dataCity);
+
         $data = Member::where('id', $id)->first();
 
-        return view('member.profile', compact('data'));
+        return view('member.profile', compact('data', 'cities', 'dataCity', 'dataDistrict'));
     }
 
     public  function store(ProfileRequest $request)
@@ -103,9 +110,8 @@ class ProfileController extends Controller
             $member->brith_date = $brithDate;
             $member->avatar = $avatar;
             $member->save();
-        
-            return redirect('list-request')->with(['message' => 'Thông tin nhân viên đã được cập nhật thành công!']);
 
+            return redirect('list-request')->with(['message' => 'Thông tin nhân viên đã được cập nhật thành công!']);
         } else {
 
             return view('request.list')->with(['message' => 'Đã từ chối yêu cầu sửa!']);
@@ -115,8 +121,12 @@ class ProfileController extends Controller
     public function show($id)
     {
         $data = AppRequest::findOrFail($id);
+        $adress = new Helper();
+        $dataCity = Cities::orderby('name')->get();
+        $dataDistrict = Districts::orderby('name')->get();
+        $cities = $adress->cities($dataCity);
 
-        return view('request.show', compact('data'));
+        return view('request.show', compact('data', 'cities', 'dataDistrict', 'dataCity'));
     }
 
     public function delete($id)
@@ -138,5 +148,4 @@ class ProfileController extends Controller
 
         return redirect('logout')->with(['message' => 'Đổi mật khẩu thành công!']);
     }
-
 }

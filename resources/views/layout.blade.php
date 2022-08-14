@@ -40,7 +40,8 @@
             width: 50px;
             overflow: hidden;
         }
-        .image-member{
+
+        .image-member {
             display: block;
             width: 200px;
             height: 200px;
@@ -107,7 +108,7 @@
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
                             <a href="{{ route('home') }}" class="nav-link active">
-                            <i class="fas fa-users"></i>
+                                <i class="fas fa-users"></i>
                                 <p>
                                     Trang chủ
                                     <i class="right fas fa-angle-left"></i>
@@ -116,7 +117,7 @@
                         </li>
                         <li class="nav-item menu-open">
                             <a href="{{ route('member.add') }}" class="nav-link active">
-                            <i class="fas fa-users"></i>
+                                <i class="fas fa-users"></i>
                                 <p>
                                     Nhân viên
                                     <i class="right fas fa-angle-left"></i>
@@ -289,67 +290,92 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
-         const labels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
+        var color = [];
+        for (i = 0; i <= 19; i++) {
+            color[i] = `rgb(${[1,2,3].map(x=>Math.random()*256|0)})`;
+        }
+        const dataDoughnut = <?= json_encode($member ?? []) ?>;
 
-    const data = {
-        labels: labels,
-        datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    };
+        const name = Object.keys(dataDoughnut).map((key) => String(key));
+        const count = Object.keys(dataDoughnut).map((key) => dataDoughnut[key]);
 
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {}
-    };
-    const myChart = new Chart(
-        document.getElementById('chartMonth'),
-        config
-    );
+        const datas = {
+            labels: name,
+            datasets: [{
+                label: 'My First Dataset',
+                data: count,
+                backgroundColor: color,
+                hoverOffset: 4
+            }]
+        };
+        const configs = {
+            type: 'doughnut',
+            data: datas,
+        };
+
+        const myCharts = new Chart(
+            document.getElementById('chartMemberDepartment'),
+            configs
+        );
     </script>
 
-
-
-
-
     <script>
+        var months = [];
+        for (var i = 0; i < 12; i++) {
+            var d = new Date((i + 1) + '/1');
+            months.push(d.toLocaleDateString(undefined, {
+                month: 'short'
+            }));
+        }
+
+        const data = {
+            labels: months,
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {}
+        };
+        const myChart = new Chart(
+            document.getElementById('chartMonth'),
+            config
+        );
+    </script>
+    <!-- <script>
         let city = <?= json_encode($city) ?? [] ?>;
         let oldCity = <?= json_encode(old('calc_shipping_provinces')) ?? '' ?>;
         let oldDistrict = <?= json_encode(old('calc_shipping_district')) ?? '' ?>;
         let optionCity = `<option value="">Tỉnh / Thành phố</option>`;
         let optionDistrict = `<option value="">Quận / Huyện</option>`;
-        let id = <?= json_encode($data ?? [])?>;
+        let id = <?= json_encode($data ?? []) ?>;
         console.log(id);
 
         function getData() {
-            $.each(city, function(index, value) {
-                let checked = (oldCity == value.id && id.id == '') ? `selected` : ``;
-                if(id.tinh == value.id && id !== ''){
-                    checked = (id.tinh !== undefined) ? 'selected' : ``;
-                }
-
-                optionCity += `<option ${checked} value="${value.id}">${value.name}</option>`
-                $.each(value.districts, function(index, value) {
-                    let checked = (oldDistrict == value.id && id.id == '') ? `selected` : ``;
-                    if(id.huyen == value.id && id !== ''){
-                        checked = (id.huyen !== undefined) ? 'selected' : ``;
+                $.each(city, function(index, value) {
+                    let checked = (oldCity == value.id && id.id == '') ? `selected` : ``;
+                    if(id.tinh == value.id && id !== ''){
+                        checked = (id.tinh !== undefined) ? 'selected' : ``;
                     }
-                    console.log(checked);
-                    optionDistrict += `<option ${checked} value="${value.id}">${value.name}</option>`;
+
+                    optionCity += `<option ${checked} value="${value.id}">${value.name}</option>`
+                    $.each(value.districts, function(index, value) {
+                        let checked = (oldDistrict == value.id && id.id == '') ? `selected` : ``;
+                        if(id.huyen == value.id && id !== ''){
+                            checked = (id.huyen !== undefined) ? 'selected' : ``;
+                        }
+                        console.log(checked);
+                        optionDistrict += `<option ${checked} value="${value.id}">${value.name}</option>`;
+                    });
                 });
-            });
 
             $('#city').html(optionCity);
             $('#district').html(optionDistrict);
@@ -373,30 +399,48 @@
             }
         });
 
-    </script>
+    </script> -->
 
-    @include('ckfinder::setup')
-    <script src={{ url('ckeditor/ckeditor.js') }}></script>
     <script>
-        CKEDITOR.replace('text', {
-            height: '550px',
-            filebrowserBrowseUrl: '{{ route('ckfinder_browser') }}',
-        });
+        $(document).on('change', '#city', function() {
+            let urlRequest = $(this).data("url");
+            let mythis = $(this);
+            let value = $(this).val();
+            let defaultCity = "<option value=''>Chọn thành phố</option>";
+            let defaultDistrict = "<option value=''>Chọn quận huyện</option>";
+            if (!value) {
+                $('#district').html(defaultDistrict);
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: urlRequest,
+                    data: {
+                        'cityId': value
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            let html = defaultDistrict + data.data;
+                            $('#district').html(html);
+                        }
+                    }
+                });
+            }
+        })
     </script>
 
     <script>
         $('#image').on('change', function(e) {
-        var reader = new FileReader();
-        var output = document.getElementById('images');
-        reader.onload = function() {
-            output.src = reader.result;
-        };
-        if (e.target.files[0] == undefined) {
-            output.src = "";
-        } else {
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    })
+            var reader = new FileReader();
+            var output = document.getElementById('images');
+            reader.onload = function() {
+                output.src = reader.result;
+            };
+            if (e.target.files[0] == undefined) {
+                output.src = "";
+            } else {
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        })
     </script>
 
 </body>

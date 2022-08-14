@@ -54,6 +54,8 @@ Route::middleware('checkLogin')->group(function () {
 
     Route::get('reset-password', 'ProfileController@getReset')->name('password.index');
     Route::post('reset-password', 'ProfileController@changePassWord')->name('password.post');
+
+    Route::get('district', 'AdressController@getDistricts')->name('ajax.address.districts');
 });
 
 

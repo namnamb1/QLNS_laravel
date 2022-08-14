@@ -43,7 +43,7 @@
                         <hr>
                         <strong><i class="fas fa-pencil-alt mr-1"></i>Trạng thái</strong>
                         <p class="text-muted">
-                            @if($data->status == 0)
+                            @if($data->status == 1)
                             <span class="badge badge-success">Đang làm việc</span>
                             @else
                             <span class="badge badge-danger">Đã nghỉ</span>

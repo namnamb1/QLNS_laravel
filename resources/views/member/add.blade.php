@@ -58,9 +58,14 @@
                             <!-- select -->
                             <div class="form-group">
                                 <label>Tỉnh</label>
-                                <select class="form-control" name="calc_shipping_provinces" id="city">
-
+                
+                                <select name="calc_shipping_provinces" id="city" class="form-control" data-url="{{ route('ajax.address.districts') }}">
+                                    <option value="">Chọn tỉnh/Thành phố</option>
+                                    @foreach ($dataCity as $val)
+                                        <option  @if(old('calc_shipping_provinces')==$val->id) selected @endif value="{{$val->id}}">{{$val->name}}</option>
+                                    @endforeach
                                 </select>
+
                                 @error('calc_shipping_provinces')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
@@ -69,8 +74,10 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Huyện</label>
-                                <select class="form-control" name="calc_shipping_district" id="district">
+                                <select name="calc_shipping_district" id="district" class="form-control">
+                                    <option value="">Chọn quận/huyện</option>
                                 </select>
+
                                 @error('calc_shipping_district')
                                 <span class="font-italic text-danger ">{{ $message }}</span>
                                 @enderror
@@ -164,12 +171,12 @@
                     <label for="">Hợp đồng nhân viên</label>
                     <input type="file" class="form-control-file" name="contract">
                     @error('contract')
-                        <span class="font-italic text-danger ">{{ $message }}</span>
+                    <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="">Giấy tờ nhân viên</label>
-                    <input type="file" class="form-control-file"  name="papers">
+                    <input type="file" class="form-control-file" name="papers">
                     @error('papers')
                     <span class="font-italic text-danger ">{{ $message }}</span>
                     @enderror
@@ -187,14 +194,13 @@
                     <label for="exampleInputFile">Số căn cước</label>
                     <div class="input-group">
                         <input type="number" name="can_cuoc" class="form-control" value="{{old('can_cuoc')}}">
-                        @error('can_cuoc')
-                        <span class="font-italic text-danger ">{{ $message }}</span>
-                        @enderror
                     </div>
+                    @error('can_cuoc')
+                    <span class="font-italic text-danger ">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <!-- select -->
                         <div class="form-group">
                             <label>Ngày bắt đầu:</label>
                             <div class="input-group">
@@ -203,10 +209,10 @@
                                 </div>
                                 <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric" name="start_date" value="{{ old('start_date') }}">
                             </div>
+                            @error('start_date')
+                            <span class="font-italic text-danger ">{{ $message }}</span>
+                            @enderror
                         </div>
-                        @error('start_date')
-                        <span class="font-italic text-danger ">{{ $message }}</span>
-                        @enderror
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">

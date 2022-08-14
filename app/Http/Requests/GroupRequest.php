@@ -28,6 +28,7 @@ class GroupRequest extends FormRequest
             'group_name' => [
                 'required',
                 'max:255',
+                'regex:/^[^\-\!\[\]\{\}\"\'\>\<\%\^\*\?\/\\\|\,\;\:\+\=\(\)\@\$\&\!\.\#\_]*$/',
                 Rule::unique('groups')->ignore($this->id)
             ],
         ];
@@ -38,6 +39,7 @@ class GroupRequest extends FormRequest
         return [
             'group_name.required' => 'Tên không được để trống',
             'group_name.max' => 'Tên không được quá 255 kí tự',
+            'group_name.regex' => 'Tên nhóm không được chứa các kí tự đặc biệt',
             'group_name.unique' => 'Tên nhóm đã tồn tại'
         ];
     }

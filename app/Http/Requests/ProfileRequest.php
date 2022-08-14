@@ -24,13 +24,13 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required|max:50|min:3|string',
+            'full_name' => ['required','max:50','min:3','regex:/^[^\-\!\[\]\{\}\"\'\>\<\%\^\*\?\/\\\|\,\;\:\+\=\(\)\@\$\&\!\.\#\_0-9]*$/'],
             'avatar' => 'mimes:jpg,png,jpeg|max:2048',
-            'calc_shipping_provinces' => 'required|numeric',
-            'calc_shipping_district' => 'required|string',
+            'calc_shipping_provinces' => ['required','numeric'],
+            'calc_shipping_district' => ['required','numeric'],
             'address' => 'required',
             'brith_date' => 'required|date',
-            'gender' => 'required|numeric',
+            'gender' => ['required','numeric'],
         ];
     }
     public function messages()
@@ -39,12 +39,13 @@ class ProfileRequest extends FormRequest
             'full_name.required' => 'Tên không được để trống',
             'full_name.max' => 'Tên không được quá 50 kí tự',
             'full_name.min' => 'Tên quá ngắn',
+            'full_name.regex' => 'Tên không được chứa các kí tự đặc biệt',
             'avatar.mimes' => 'Định dạng file ảnh không hợp lệ',
             'avatar.max' => 'Kính thước ảnh không được vượt quá 2048kb',
             'calc_shipping_provinces.required' => 'Tỉnh\Thành Phố thành không được để trống',
             'calc_shipping_provinces.numeric' => 'Tỉnh\Thành Phố không hợp lệ',
             'calc_shipping_district.required' => 'Huyện không được để trống',
-            'calc_shipping_district.string' => 'Huyện không hợp lệ',
+            'calc_shipping_district.' => 'Huyện không hợp lệ',
             'address.required' => 'Địa chỉ không được để trống',
             'brith_date.required' => 'Ngày sinh không được để trống',
             'brith_date.date' => 'Đinh dạng ngày không hợp lệ',
