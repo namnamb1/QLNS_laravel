@@ -108,7 +108,9 @@ class ProfileController extends Controller
             $member->huyen = $huyen;
             $member->address = $address;
             $member->brith_date = $brithDate;
-            $member->avatar = $avatar;
+            if($avatar){
+                $member->avatar = $avatar;
+            }
             $member->save();
 
             return redirect('list-request')->with(['message' => 'Thông tin nhân viên đã được cập nhật thành công!']);

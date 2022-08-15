@@ -37,9 +37,7 @@
                         <select class="form-control" name="calc_shipping_district" id="district">
                             <option value="">Quận / Huyện</option>
                             @if($district)
-                                @foreach ($dataDistrict as $val)
-                                    <option @if($val->id == $district) selected @endif value="{{$val->id}}">{{$val->name}}</option>
-                                @endforeach
+                            <option value="{{$district}}" selected>{{$district->name}}</option>
                             @endif
                         </select>
                         @error('calc_shipping_district')

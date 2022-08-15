@@ -16,7 +16,7 @@ class CreateTableMemberLeave extends Migration
         Schema::create('member_leave', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('member_id');
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
             $table->date('date_leave');
         });
     }

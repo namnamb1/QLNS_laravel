@@ -65,9 +65,7 @@
                                 <label>Huyện</label>
                                 <select class="form-control" name="calc_shipping_district" id="district">
                                     <option value="">Quận / Huyện</option>
-                                    @foreach ($dataDistrict as $val)
-                                    <option {{$data->rq_huyen == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->name}}</option>
-                                    @endforeach
+                                    <option value="{{$data->rq_huyen}}" selected>{{$data->districts->name ?? ''}}</option>
                                 </select>
                                 @error('calc_shipping_district')
                                 <span class="font-italic text-danger ">{{ $message }}</span>

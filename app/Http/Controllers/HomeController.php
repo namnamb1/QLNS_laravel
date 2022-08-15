@@ -11,6 +11,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+
         $year = MemberLeave::select(DB::raw('Year(date_leave) as year'))
             ->groupBy(DB::raw("Year(date_leave)"))
             ->pluck('year');
@@ -29,7 +30,7 @@ class HomeController extends Controller
             ->groupBy(DB::raw("MONTH(date_leave)"))
             ->pluck('count');
 
-        //  dd($memberLeave);
+        // dd($memberLeave);
         $month = MemberLeave::select(DB::raw('MONTH(date_leave) as month'))
             ->whereYear('date_leave', $time)
             ->whereIn(DB::raw('MONTH(date_leave)'), $arrayMonth)
@@ -51,9 +52,9 @@ class HomeController extends Controller
         $member = Member::select(DB::raw('COUNT(*) as count'), 'departments.department_name as department_name')
             ->where('status', '=', '2')
             ->join('departments', 'members.department_id', '=', 'departments.id')
-            ->groupBy('departments.id')
+            ->groupBy('members.department_id')
             ->pluck('count', 'department_name');
-        //  dd($member);
+        //   dd($member);
 
         return view('home.index', compact('member', 'data', 'year','time'));
     }

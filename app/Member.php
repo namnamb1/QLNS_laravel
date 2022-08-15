@@ -28,7 +28,7 @@ class Member extends Authenticatable
 
     public function department()
     {
-        return $this->belongsTo(Department::class,'department_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function document()
@@ -43,7 +43,11 @@ class Member extends Authenticatable
 
     public function districts()
     {
-        return $this->belongsTo(Districts::class,'huyen');
+        return $this->belongsTo(Districts::class, 'huyen');
     }
 
+    public function memberLeave()
+    {
+        return $this->belongsTo(MemberLeave::class);
+    }
 }

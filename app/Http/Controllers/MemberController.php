@@ -12,6 +12,7 @@ use App\Http\Helpers\Helper;
 use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
@@ -63,6 +64,7 @@ class MemberController extends Controller
 
         if ($district) {
             $list = $list->where('huyen', '=', $district);
+            $district = Districts::where('id','=',$district)->first();
         }
 
         $list = $list->orderBy('members.id', 'desc')->paginate(20);
@@ -202,6 +204,7 @@ class MemberController extends Controller
     {
         Member::findOrFail($id)->hasGroup()->delete();
         Member::findOrFail($id)->document()->delete();
+        Member::findOrFail($id)->memberLeave()->delete();
         Member::findOrFail($id)->delete();
         return redirect()->back()->with(['message' => 'Xóa nhân viên thành công']);
     }

@@ -15,4 +15,8 @@ class Request extends Model
     {
         return $this->belongsTo(Member::class, 'member_id');
     }
+    public function districts()
+    {
+        return $this->belongsTo(Districts::class,'rq_huyen');
+    }
 }
