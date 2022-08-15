@@ -28,8 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
        
-        $data['city'] = Cities::with('districts')->get();
+        // $data['city'] = Cities::with('districts')->get();
         
-        view()->share($data);
+        // view()->share($data);
     }
 }

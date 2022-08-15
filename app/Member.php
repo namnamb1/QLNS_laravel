@@ -43,7 +43,7 @@ class Member extends Authenticatable
 
     public function districts()
     {
-        return $this->hasOne(Districts::class);
+        return $this->belongsTo(Districts::class,'huyen');
     }
 
 }

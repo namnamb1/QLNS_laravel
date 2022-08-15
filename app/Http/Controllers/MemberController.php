@@ -13,7 +13,6 @@ use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PHPUnit\TextUI\Help;
 
 class MemberController extends Controller
 {
@@ -66,9 +65,9 @@ class MemberController extends Controller
             $list = $list->where('huyen', '=', $district);
         }
 
-        $list = $list->orderBy('members.id', 'desc')->paginate(10);
+        $list = $list->orderBy('members.id', 'desc')->paginate(20);
 
-        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date', 'cities','dataCity'));
+        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date', 'cities','dataCity','city','dataDistrict','district'));
     }
 
     public function create()

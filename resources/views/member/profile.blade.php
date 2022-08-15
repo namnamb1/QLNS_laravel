@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <!-- left column -->
-    <div class="col-md-6">
+    <div class="col-md-6 float-right">
         <!-- Input addon -->
         <div class="card card-info">
             <div class="card-header">
@@ -112,13 +112,53 @@
             </form>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/' . $data->avatar)}}" alt="User profile picture">
+                </div>
+                <h3 class="profile-username text-center">{{ $data->full_name }}</h3>
+                <p class="text-muted text-center">{{ $data->department->department_name }}</p>
+                <strong><i class="fas fa-book mr-1"></i> Email</strong>
+                <p class="text-muted">
+                    {{ $data->email }}
+                </p>
+                <hr>
+                <strong><i class="fas fa-map-marker-alt mr-1"></i>Ngày sinh</strong>
+                <p class="text-muted">{{ $data->brith_date }}</p>
+                <hr>
+                <strong><i class="fas fa-book mr-1"></i> Giới tính</strong>
+                <p class="text-muted">
+                    @if($data->gender == 1)
+                    Nam
+                    @else
+                    Nữ
+                    @endif
+                </p>
+                <hr>
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
+                <p class="text-muted">{{ $data->address }}</p>
+                <hr>
+                <strong><i class="fas fa-pencil-alt mr-1"></i>Trạng thái</strong>
+                <p class="text-muted">
+                    @if($data->status == 1)
+                    <span class="badge badge-success">Đang làm việc</span>
+                    @else
+                    <span class="badge badge-danger">Đã nghỉ</span>
+                    @endif
+                </p>
+                <hr>
+                <strong><i class="far fa-file-alt mr-1"></i> Nhóm</strong>
+                <p class="text-muted">
+                    @foreach($data->group as $val)
+                    <span class="badge btn-primary">{{ $val->group_name}}</span>
+                    @endforeach
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-
-
-
 </div>
 
 

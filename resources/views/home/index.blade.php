@@ -44,7 +44,7 @@
     <div class="col-md-6">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Danh sách nhân viên nghỉ theo tháng</h3>
+                <h3 class="card-title">Danh sách nhân viên nghỉ phép theo tháng</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -57,13 +57,23 @@
             <div class="card-body">
                 <div class="chartjs-size-monitor">
                     <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
+                        <form class="" action="{{route('home')}}">
+                            <select name="time" class=" mb-3" style="width:200px;height:39px;border:1px solid #c9c9c9;border-radius:3px">
+                                <option value="">Chọn năm</option>
+                                @if(isset($year))
+                                    @foreach($year as $val)
+                                    <option @if($time == $val) selected @endif value="{{ $val }}"> {{ $val }} </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                        </form>
                     </div>
                     <div class="chartjs-size-monitor-shrink">
                         <div class=""></div>
                     </div>
                 </div>
-                <canvas id="chartMemberDepartment" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 657px;" width="985" height="375" class="chartjs-render-monitor"></canvas>
+                <canvas id="chartMonth" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 657px;" width="985" height="375" class="chartjs-render-monitor"></canvas>
             </div>
         </div>
     </div>

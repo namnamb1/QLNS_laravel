@@ -108,10 +108,9 @@
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
                             <a href="{{ route('home') }}" class="nav-link active">
-                                <i class="fas fa-users"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Trang chủ
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                         </li>
@@ -333,10 +332,10 @@
         const data = {
             labels: months,
             datasets: [{
-                label: 'My First dataset',
+                label: 'Số nhân viên nghỉ phép',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data:  <?= json_encode($data ?? []) ?>,
             }]
         };
 
@@ -350,56 +349,6 @@
             config
         );
     </script>
-    <!-- <script>
-        let city = <?= json_encode($city) ?? [] ?>;
-        let oldCity = <?= json_encode(old('calc_shipping_provinces')) ?? '' ?>;
-        let oldDistrict = <?= json_encode(old('calc_shipping_district')) ?? '' ?>;
-        let optionCity = `<option value="">Tỉnh / Thành phố</option>`;
-        let optionDistrict = `<option value="">Quận / Huyện</option>`;
-        let id = <?= json_encode($data ?? []) ?>;
-        console.log(id);
-
-        function getData() {
-                $.each(city, function(index, value) {
-                    let checked = (oldCity == value.id && id.id == '') ? `selected` : ``;
-                    if(id.tinh == value.id && id !== ''){
-                        checked = (id.tinh !== undefined) ? 'selected' : ``;
-                    }
-
-                    optionCity += `<option ${checked} value="${value.id}">${value.name}</option>`
-                    $.each(value.districts, function(index, value) {
-                        let checked = (oldDistrict == value.id && id.id == '') ? `selected` : ``;
-                        if(id.huyen == value.id && id !== ''){
-                            checked = (id.huyen !== undefined) ? 'selected' : ``;
-                        }
-                        console.log(checked);
-                        optionDistrict += `<option ${checked} value="${value.id}">${value.name}</option>`;
-                    });
-                });
-
-            $('#city').html(optionCity);
-            $('#district').html(optionDistrict);
-        }
-
-        getData();
-
-        $('#city').on('change', function() {
-            if($('#city').val() !== ''){
-                optionDistrict = ``;
-                $.each(city, function(index, value) {
-                    if (value.id == $('#city').val()) {
-                        $.each(value.districts, function(index, value) {
-                            optionDistrict += `<option value="${value.id}">${value.name}</option>`;
-                        });
-                    }
-                });
-                $('#district').html(optionDistrict);
-            } else {
-                getData();
-            }
-        });
-
-    </script> -->
 
     <script>
         $(document).on('change', '#city', function() {

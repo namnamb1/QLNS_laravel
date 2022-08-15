@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-header">
         <div class="box-body">
-            <form class="row">
+            <form class="row" action="">
                 <div class="col-sm-2">
                     <label for="">Tên nhân viên:</label>
                     <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm nhân viên" value="{{ $keyword }}">
@@ -20,9 +20,10 @@
                     <div class="form-group">
                         <label>Tỉnh/Thành phố</label>
                         <select name="calc_shipping_provinces" id="city" class="form-control" data-url="{{ route('ajax.address.districts') }}">
-                            <option value="">Chọn tỉnh/Thành phố</option>
+                        <option value="">Chọn tỉnh/Thành phố</option>
+                           
                             @foreach ($dataCity as $val)
-                                <option  @if(old('calc_shipping_provinces')==$val->id) selected @endif value="{{$val->id}}">{{$val->name}}</option>
+                                <option @if($val->id == $city) selected @endif value="{{$val->id}}">{{$val->name}}</option>
                             @endforeach
                         </select>
                         @error('calc_shipping_provinces')
@@ -35,6 +36,11 @@
                         <label>Huyện</label>
                         <select class="form-control" name="calc_shipping_district" id="district">
                             <option value="">Quận / Huyện</option>
+                            @if($district)
+                                @foreach ($dataDistrict as $val)
+                                    <option @if($val->id == $district) selected @endif value="{{$val->id}}">{{$val->name}}</option>
+                                @endforeach
+                            @endif
                         </select>
                         @error('calc_shipping_district')
                         <span class="font-italic text-danger ">{{ $message }}</span>
