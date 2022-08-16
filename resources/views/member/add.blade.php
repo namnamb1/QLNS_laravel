@@ -58,11 +58,11 @@
                             <!-- select -->
                             <div class="form-group">
                                 <label>Tỉnh</label>
-                
+
                                 <select name="calc_shipping_provinces" id="city" class="form-control" data-url="{{ route('ajax.address.districts') }}">
                                     <option value="">Chọn tỉnh/Thành phố</option>
                                     @foreach ($dataCity as $val)
-                                        <option  @if(old('calc_shipping_provinces')==$val->id) selected @endif value="{{$val->id}}">{{$val->name}}</option>
+                                    <option @if(old('calc_shipping_provinces')==$val->id) selected @endif value="{{$val->id}}">{{$val->name}}</option>
                                     @endforeach
                                 </select>
 
@@ -131,15 +131,15 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <!-- select -->
                             <div class="form-group">
-                                <label>Chọn quyền</label>
-                                <select class="form-control" name="role">
-                                    <option value="0">User</option>
-                                    <option value="1" @if(old('role')==1) selected @endif>Admin</option>
-                                </select>
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
+                                @error('phone')
+                                <span class="font-italic text-danger ">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -156,7 +156,16 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="col-sm-6">
+                            <!-- select -->
+                            <div class="form-group">
+                                <label>Chọn quyền</label>
+                                <select class="form-control" name="role">
+                                    <option value="0">User</option>
+                                    <option value="1" @if(old('role')==1) selected @endif>Admin</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
         </div>
@@ -234,16 +243,12 @@
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-info">Thêm nhân viên</button>
-                <button type="" class="btn btn-default float-right">Thoát</button>
+                <a href="{{ route('member.list') }}" class="btn btn-default float-right">Thoát</a>
             </div>
             </form>
 
         </div>
     </div>
 </div>
-
-
-
-
 
 @endsection

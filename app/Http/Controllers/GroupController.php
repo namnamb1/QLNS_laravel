@@ -29,7 +29,7 @@ class GroupController extends Controller
     public function store(GroupRequest $request)
     {
         Group::create([
-            'group_name' => $request->group_name
+            'group_name' => encrypt($request->group_name),
         ]);
 
         return redirect()->back()->with(['message' => 'Thêm nhóm thành công']);

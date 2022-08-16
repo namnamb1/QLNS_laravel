@@ -64,32 +64,38 @@ class MemberController extends Controller
 
         if ($district) {
             $list = $list->where('huyen', '=', $district);
-            $district = Districts::where('id','=',$district)->first();
+            $district = Districts::where('id', '=', $district)->first();
         }
 
         $list = $list->orderBy('members.id', 'desc')->paginate(20);
 
-        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date', 'cities','dataCity','city','dataDistrict','district'));
+        return view('member.index', compact('list', 'keyword', 'start_date', 'end_date', 'cities', 'dataCity', 'city', 'dataDistrict', 'district'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $departments = Department::all();
         $groups = Group::all();
 
         $adress = new Helper();
+        $dataDistrict = Districts::orderby('name')->get();
         $dataCity = Cities::orderby('name')->get();
         $cities = $adress->cities($dataCity);
 
-        return view('member.add', compact('departments', 'groups', 'cities','dataCity'));
+
+        return view('member.add', compact('departments', 'groups', 'cities', 'dataCity'));
     }
 
     public function store(MemberRequest $request)
     {
+        $district = $request->calc_shipping_district;
+        if ($district) {
+            $district = Districts::where('id', '=', $district)->first();
+        }
 
         $member = Member::create([
             'full_name' => $request->full_name,
-            'email' => $request->email,
+            'email' => encrypt($request->email),
             'password' => Hash::make($request->password),
             'gender' => $request->gender,
             'tinh' => $request->calc_shipping_provinces,
@@ -97,6 +103,7 @@ class MemberController extends Controller
             'address' => $request->address,
             'brith_date' => $request->brith_date,
             'role' => $request->role,
+            'phone' => encrypt($request->phone),
             'status' => 1,
             'department_id' => $request->department_id,
         ]);
@@ -112,7 +119,7 @@ class MemberController extends Controller
             'member_id' => $member->id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'can_cuoc' => Hash::make($request->can_cuoc),
+            'can_cuoc' => encrypt($request->can_cuoc),
         ]);
 
         if ($request->hasFile('papers')) {
@@ -133,7 +140,7 @@ class MemberController extends Controller
         $document->save();
         Member::find($member->id)->group()->attach($request->group);
 
-        return redirect('list-member')->with(['message' => 'Thêm nhân viên thành công']);
+        return redirect('list-member', compact('district'))->with(['message' => 'Thêm nhân viên thành công']);
     }
 
     public function edit($id)
@@ -146,7 +153,7 @@ class MemberController extends Controller
         $dataDistrict = Districts::orderby('name')->get();
         $cities = $adress->cities($dataCity);
 
-        return view('member.edit', compact('data', 'departments', 'groups','cities','dataCity','dataDistrict'));
+        return view('member.edit', compact('data', 'departments', 'groups', 'cities', 'dataCity', 'dataDistrict'));
     }
 
     public function update(MemberRequest $request, $id)
@@ -154,7 +161,7 @@ class MemberController extends Controller
         $member = Member::findOrFail($id);
         $member->update([
             'full_name' => $request->full_name,
-            'email' => $request->email,
+            'email' => encrypt($request->email),
             'gender' => $request->gender,
             'tinh' => $request->calc_shipping_provinces,
             'huyen' => $request->calc_shipping_district,
@@ -163,6 +170,7 @@ class MemberController extends Controller
             'role' => $request->role,
             'status' => $request->status,
             'department_id' => $request->department_id,
+            'phone' => encrypt($request->phone),
         ]);
 
         if ($request->hasFile('avatar')) {
@@ -176,7 +184,7 @@ class MemberController extends Controller
         $document->update([
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'can_cuoc' => $request->can_cuoc,
+            'can_cuoc' => encrypt($request->can_cuoc),
         ]);
         if ($request->hasFile('papers')) {
             $newFileName = uniqid() . '-' . $request->papers->getClientOriginalName();
@@ -204,7 +212,7 @@ class MemberController extends Controller
     {
         Member::findOrFail($id)->hasGroup()->delete();
         Member::findOrFail($id)->document()->delete();
-        Member::findOrFail($id)->memberLeave()->delete();
+        Member::findOrFail($id)->request()->delete();
         Member::findOrFail($id)->delete();
         return redirect()->back()->with(['message' => 'Xóa nhân viên thành công']);
     }

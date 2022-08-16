@@ -1,12 +1,25 @@
 @extends('layout')
 @section('content')
+<?php
+try {
+    $data->email = decrypt($data->email);
+    $data->phone = decrypt($data->phone);
+    $data->document->can_cuoc = decrypt($data->document->can_cuoc);
+} catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+    $data->email;
+    $data->phone;
+    $data->document->can_cuoc;
+}
+?>
 <section class="content-header">
     <div class="container-fluid">
+        <a class="btn-danger btn float-right" href="{{ route('member.edit',$data->id)}}"> Sửa nhân viên</a>
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1>Thông tin nhân viên</h1>
             </div>
         </div>
+
     </div>
 </section>
 <section class="content">
@@ -66,7 +79,9 @@
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Hợp đồng</a></li>
                             <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Xem CV</a></li>
                             <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Giấy tờ</a></li>
+
                         </ul>
+
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
@@ -77,10 +92,10 @@
                                             <a href="">Hợp đồng</a>
                                         </span>
                                         <strong>
-                                            <span class="float-left b">Từ {{ date('d-m-Y',strtotime($data->document->start_date)) }}   Đến ngày {{ date('d-m-Y',strtotime($data->document->end_date)) }}</span>
+                                            <span class="float-left b">Từ {{ date('d-m-Y',strtotime($data->document->start_date)) }} Đến ngày {{ date('d-m-Y',strtotime($data->document->end_date)) }}</span>
                                         </strong>
                                     </div>
-                                    <div class="tab-pane" >
+                                    <div class="tab-pane">
                                         @if($data->document->contract)
                                         <iframe width="100%" height="800px" src="{{asset('storage/' . $data->document->contract)}}"></iframe>
                                         @else

@@ -208,7 +208,7 @@
                         </li>
                         <li class="nav-item menu-open">
                             <a href="{{ route('password.index') }}" class="nav-link active">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     Đổi mật khẩu
                                 </p>

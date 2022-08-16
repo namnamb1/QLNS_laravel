@@ -10,7 +10,7 @@ class Member extends Authenticatable
 {
     use Notifiable;
     protected $table = 'members';
-    protected $fillable = ['full_name', 'email', 'password', 'gender', 'tinh', 'huyen', 'address', 'status', 'brith_date', 'avatar', 'role', 'department_id'];
+    protected $fillable = ['full_name', 'email', 'password', 'gender', 'tinh', 'huyen', 'address', 'status', 'brith_date', 'avatar', 'role', 'department_id','phone'];
     protected $hidden = [
         'password',
     ];
@@ -49,5 +49,9 @@ class Member extends Authenticatable
     public function memberLeave()
     {
         return $this->belongsTo(MemberLeave::class);
+    }
+    public function request()
+    {
+        return $this->belongsTo(Request::class);
     }
 }

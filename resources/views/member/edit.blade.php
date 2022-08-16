@@ -1,5 +1,16 @@
 @extends('layout')
 @section('content')
+<?php
+try {
+    $data->email = decrypt($data->email);
+    $data->phone = decrypt($data->phone);
+    $data->document->can_cuoc = decrypt($data->document->can_cuoc);
+} catch(Illuminate\Contracts\Encryption\DecryptException $e) {
+    $data->email;
+    $data->phone;
+    $data->document->can_cuoc;
+}
+?>
 <div class="row">
     <!-- left column -->
     <div class="col-md-6">
@@ -14,7 +25,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" value="{{ old('email',$data->email) }}">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" value="{{ old('email',($data->email)) }}">
                         @error('email')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
@@ -153,6 +164,13 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                        <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control"  name="phone" value="{{ old('phone',$data->phone) }}">
+                                @error('phone')
+                                <span class="font-italic text-danger ">{{ $message }}</span>
+                                @enderror
+                            </div>
                             <div class="form-group">
                                 <label>Chọn trạng thái</label>
                                 <select class="form-control" name="status">
@@ -200,7 +218,7 @@
                 <div class="form-group">
                     <label for="exampleInputFile">Số căn cước</label>
                     <div class="input-group">
-                        <input type="number" name="can_cuoc" class="form-control" value="{{$data->document->can_cuoc}}">
+                        <input type="number" name="can_cuoc" class="form-control" value="{{ old('can_cuoc',$data->document->can_cuoc) }}">
                         @error('can_cuoc')
                         <span class="font-italic text-danger ">{{ $message }}</span>
                         @enderror
