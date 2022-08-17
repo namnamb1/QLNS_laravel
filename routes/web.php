@@ -58,7 +58,7 @@ Route::middleware('checkLogin')->group(function () {
     Route::get('district', 'AdressController@getDistricts')->name('ajax.address.districts');
 });
 
-
+Route::resource('users', 'Api\CallApiUserController');
 
 Route::get('login', 'LoginController@login')->name('login');
 Route::post('checklogin', 'LoginController@checklogin')->name('checklogin');

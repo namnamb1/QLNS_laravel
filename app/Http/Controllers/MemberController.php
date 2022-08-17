@@ -13,6 +13,7 @@ use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
@@ -36,7 +37,7 @@ class MemberController extends Controller
         $list = $list->join('documents', 'members.id', '=', 'documents.member_id');
 
         if ($keyword) {
-            $list = $list->where('full_name', 'like', "%" . $keyword . "%");
+            $list = $list->where('email', 'like', "%" . Crypt::encryptString($keyword) . "%");
         }
 
         if ($start_date) {
